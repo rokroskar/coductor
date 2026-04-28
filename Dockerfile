@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y nodejs ripgrep bubblewrap socat && \
     npm install -g @google/gemini-cli && \
     npm install -g opencode-ai && \
     npm install -g @mariozechner/pi-coding-agent && \
-    pi install npm:pi-sandbox
+    npm install -g pi-sandbox
 
 # 3. Copy your wrapper script
 COPY entrypoint-wrapper.sh /entrypoint-wrapper.sh
@@ -78,22 +78,5 @@ USER renku
 ENTRYPOINT ["/entrypoint-wrapper.sh"]
 
 # 11. inject the sandbox configuration into the home directory
-RUN mkdir -p /home/renku/.pi/agent && \                                                                                                                                                                
-       cat > /home/renku/.pi/agent/sandbox.json << 'EOF'                                                                                                                                                  
-   {                                                                                                                                                                                         
-     "enabled": true,                                                                                                                                                                        
-     "allowBrowserProcess": true,                                                                                                                                                            
-     "network": {                                                                                                                                                                            
-       "allowLocalBinding": true,                                                                                                                                                            
-       "allowAllUnixSockets": true,                                                                                                                                                          
-       "allowedDomains": ["github.com", "*.github.com", "pypi.org", "*.pypi.org"],                                                                                                           
-       "deniedDomains": []                                                                                                                                                                   
-     },                                                                                                                                                                                      
-     "filesystem": {                                                                                                                                                                         
-       "denyRead": ["~/.ssh", "~/.kube", "/home"],                                                                                                                                           
-       "allowRead": [".", "~/.config", "~/.local", "/home/renku/work"],                                                                                                                      
-       "allowWrite": [".", "/tmp"],                                                                                                                                                          
-       "denyWrite": [".env", ".env.*", "*.pem", "*.key"]                                                                                                                                     
-     }                                                                                                                                                                                       
-   }                                                                                                                                                                                         
-   EOF   
+RUN mkdir -p /home/renku/.pi/agent
+COPY sandbox.json /home/renku/.pi/agent/
