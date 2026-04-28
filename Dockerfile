@@ -76,3 +76,24 @@ USER renku
 
 # 10. Set wrapper as the new ENTRYPOINT
 ENTRYPOINT ["/entrypoint-wrapper.sh"]
+
+# 11. inject the sandbox configuration into the home directory
+RUN mkdir -p /home/renku/.pi/agent && \                                                                                                                                                                
+       cat > /home/renku/.pi/agent/sandbox.json << 'EOF'                                                                                                                                                  
+   {                                                                                                                                                                                         
+     "enabled": true,                                                                                                                                                                        
+     "allowBrowserProcess": true,                                                                                                                                                            
+     "network": {                                                                                                                                                                            
+       "allowLocalBinding": true,                                                                                                                                                            
+       "allowAllUnixSockets": true,                                                                                                                                                          
+       "allowedDomains": ["github.com", "*.github.com", "pypi.org", "*.pypi.org"],                                                                                                           
+       "deniedDomains": []                                                                                                                                                                   
+     },                                                                                                                                                                                      
+     "filesystem": {                                                                                                                                                                         
+       "denyRead": ["~/.ssh", "~/.kube", "/home"],                                                                                                                                           
+       "allowRead": [".", "~/.config", "~/.local", "/home/renku/work"],                                                                                                                      
+       "allowWrite": [".", "/tmp"],                                                                                                                                                          
+       "denyWrite": [".env", ".env.*", "*.pem", "*.key"]                                                                                                                                     
+     }                                                                                                                                                                                       
+   }                                                                                                                                                                                         
+   EOF   
