@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "allowBrowserProcess": true,
+  "network": {
+    "allowLocalBinding": true,
+    "allowAllUnixSockets": true,
+    "allowedDomains": ["github.com", "*.github.com", "pypi.org", "*.pypi.org"],
+    "deniedDomains": []
+  },
+  "filesystem": {
+    "denyRead": [
+      "~/.ssh",
+      "~/.kube"
+    ],
+    "allowRead": [
+      ".",
+      "~/.config",
+      "~/.local",
+      "/home/renku/work"
+    ],
+    "allowWrite": [".", "/tmp"],
+    "denyWrite": [".env", ".env.*", "*.pem", "*.key"]
+  }
+}
