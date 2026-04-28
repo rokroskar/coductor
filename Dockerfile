@@ -19,7 +19,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 ENV GEMINI_CONFIG_DIR=/home/renku/work/.config/
 # 3. Install Node.js and Gemini CLI
-RUN apt-get update && apt-get install -y nodejs && \
+RUN apt-get update && apt-get install -y nodejs ripgrep bubblewrap socat && \
     npm install -g @google/gemini-cli && \
     npm install -g opencode-ai && \
     npm install -g @mariozechner/pi-coding-agent && \
