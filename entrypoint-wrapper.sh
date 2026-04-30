@@ -91,6 +91,28 @@ else
     echo "WARNING: No models.json file found at $SOURCE_FILE. pi agent models will not be configured."
 fi
 
+# --- File: sandbox.json pi ---
+SOURCE_FILE="/sandbox.json"
+DEST_FILE="$DEST_DIR/sandbox.json"
+
+if [ -f "$SOURCE_FILE" ]; then
+    echo "Found sandbox.json, copying to $DEST_FILE..."
+    cp "$SOURCE_FILE" "$DEST_FILE"
+else
+    echo "WARNING: No sandbox.json file found at $SOURCE_FILE. pi agent sandbox will not be configured."
+fi
+
+# --- File: settings.json pi ---
+SOURCE_FILE="/settings.json"
+DEST_FILE="$DEST_DIR/settings.json"
+
+if [ -f "$SOURCE_FILE" ]; then
+    echo "Found settings.json, copying to $DEST_FILE..."
+    cp "$SOURCE_FILE" "$DEST_FILE"
+else
+    echo "WARNING: No settings.json file found at $SOURCE_FILE. pi agent settings will not be configured."
+fi
+
 
 # Check if the host key file is missing
 if [ ! -f "$SSH_SERVER_KEY_FILE" ]; then

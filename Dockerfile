@@ -54,6 +54,10 @@ RUN curl -sL https://github.com/n0-computer/dumbpipe/releases/download/v0.33.0/d
 COPY ocli-login.py /usr/local/bin/ocli-login
 RUN chmod +x /usr/local/bin/ocli-login
 
+# Copy pi sandbox and settings files to root (won't be overwritten by work dir mount)
+COPY sandbox.json /sandbox.json
+COPY settings.json /settings.json
+
 # 6. Switch to the 'renku' user and configure userspace openssh-server
 USER renku
 
@@ -76,8 +80,3 @@ USER renku
 
 # 10. Set wrapper as the new ENTRYPOINT
 ENTRYPOINT ["/entrypoint-wrapper.sh"]
-
-# 11. Create the PI agent configuration directory and copy configuration files
-RUN mkdir -p /home/renku/work/.pi/agent
-COPY sandbox.json /home/renku/work/.pi/agent/
-COPY settings.json /home/renku/work/.pi/agent/
