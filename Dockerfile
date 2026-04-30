@@ -77,6 +77,7 @@ USER renku
 # 10. Set wrapper as the new ENTRYPOINT
 ENTRYPOINT ["/entrypoint-wrapper.sh"]
 
-# 11. inject the sandbox configuration into the home directory
-RUN mkdir -p /home/renku/.pi/agent
-COPY sandbox.json /home/renku/.pi/agent/
+# 11. Create the PI agent configuration directory and copy configuration files
+RUN mkdir -p /home/renku/work/.pi/agent
+COPY sandbox.json /home/renku/work/.pi/agent/
+COPY settings.json /home/renku/work/.pi/agent/
